@@ -417,6 +417,7 @@ On success, zero is returned.  On error, -1 is returned, anderrno is set to indi
         int res = bind(int sockfd, const struct sockaddr *addr,  socklen_t addrlen);
         
 After creation of the socket, bind function binds the socket to the address and port number specified in addr(custom data structure). In the example code, we bind the server to the localhost, hence we use INADDR_ANY to specify the IP address.
+
 **RETURN VALUE**
 
 On success, zero is returned.  On error, -1 is returned, anderrno is set to indicate the error.
