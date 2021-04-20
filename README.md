@@ -399,7 +399,7 @@ htonl, htons, ntohl, ntohs - convert values between host and network byte order
 ## Socket creation:
    1. socketcr: socket descriptor, an integer (like a file-handle)
    
-        int socketcr = socket(domain, type, protocol)
+          int socketcr = socket(domain, type, protocol)
 
   *	domain: integer, communication domain 
      o	IPv4 protocol  : AF_INET 
@@ -411,12 +411,12 @@ htonl, htons, ntohl, ntohs - convert values between host and network byte order
 
  2. Bind:
  
-        int bind(int sockfd, const struct sockaddr *addr,  socklen_t addrlen);
+          int bind(int sockfd, const struct sockaddr *addr,  socklen_t addrlen);
         
 After creation of the socket, bind function binds the socket to the address and port number specified in addr(custom data structure). In the example code, we bind the server to the localhost, hence we use INADDR_ANY to specify the IP address.
  3. Listen:
 
-      int listen(int sockfd, int backlog); 
+          int listen(int sockfd, int backlog); 
      
 It puts the server socket in a passive mode, where it waits for the client to approach the server to make a connection. The backlog, defines the maximum length to which the queue of pending connections for sockfd may grow. If a connection request arrives when the queue is full, the client may receive an error with an indication of ECONNREFUSED.
 
