@@ -117,7 +117,9 @@ HTTP is a client-server protocol: requests are sent by one entity, the user-agen
 Each individual request is sent to a server, which handles it and provides an answer, called the response. Between the client and the server there are numerous entities, collectively called proxies, which perform different operations and act as gateways or caches, for example.
 
 HTTP headers
+
 **Headers can also be grouped according to how proxies handle them:**
+
 *	Connection:
 * Keep-Alive
 *	Proxy-Authenticate
@@ -126,7 +128,9 @@ HTTP headers
 *	Trailer
 *	Transfer-Encoding
 *	Upgrade (see also Protocol upgrade mechanism).
+	
 **HTTP Methods**
+
 *	GET
 *	POST
 *	PUT
@@ -136,6 +140,7 @@ HTTP headers
 *	OPTIONS
  
 ## Procedure in Client-Server Communication:
+
 o	Socket: Create a new communication
 o	Bind: Attach a local address to a socket
 o	Listen: Announce willingness to accept connections
