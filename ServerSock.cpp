@@ -1,86 +1,89 @@
 #include<iostream>
 #include<WS2tcpip.h>
-#include<vector>
-#pragma comment (lib , "Ws2_32.lib")
-using namespace std;
-#define PORT  6969
-#define BUFLEN 1024
-struct Client
-{
-	sockaddr_in info;
-	char* IP;
-	bool isConnect;
-};
-vector<Client> Clients;
+#pragma comment (lib, "Ws2_32.lib")
+
+
 int main()
 {
-	json a;
 
-	WSADATA windsow_socket_info;
-	WORD VersionOFWindowsSocket;
-	VersionOFWindowsSocket = MAKEWORD(2,2); 
-	int res;
-	res = WSAStartup(VersionOFWindowsSocket , &windsow_socket_info);
+	//INITIALIZE Win Socket
+
+	WSADATA Windows_Socket_info;
+	WORD VerionOfWindows_Socket = MAKEWORD(2, 2);
+	int res = WSAStartup(VerionOfWindows_Socket, &Windows_Socket_info);
 	if (res != 0)
 	{
-		// cerr = cout 
-		cerr << "Initialize winSock Error : " << res; 
-		return;
+		std::cerr << "INITIALIZE WinSock Error : " << res;
+		return 0;
 	}
-	sockaddr_in server_address;         
-	server_address.sin_family = AF_INET ; // Version IP (v4 = AF_INET , v6 = AF_INET6) 
-	server_address.sin_port = htons(PORT);
+
+	//CREATE LISTENING SOCKET
+	sockaddr_in server_address;
+	server_address.sin_family = AF_INET;
+	server_address.sin_port = htons(6969);
 	server_address.sin_addr.S_un.S_addr = INADDR_ANY;
-	//                                        TCP    // UDP SOCK_DGRAM
-falg:;
-	SOCKET server_SOCK = socket(AF_INET , SOCK_STREAM , 0);
-	res = bind(server_SOCK, (sockaddr*)&server_address, sizeof(server_address));
-	if (res != 0)
-	{
-		// cerr = cout 
-		cerr << "bind Error : " << res;
-		return;
+
+	SOCKET Server_sock = socket(AF_INET, SOCK_STREAM, 0);
+
+	int status = bind(Server_sock, (sockaddr*)&server_address, sizeof(server_address));
+
+	if (status == SOCKET_ERROR) {
+		std::cout << "ABORT\n";
+		closesocket(Server_sock); //clean up
+		WSACleanup(); //clean up
+		return 0;
 	}
-	res = listen(server_SOCK , SOMAXCONN);
-	if (res != 0)
-	{
-		// cerr = cout 
-		cerr << "listen Error : " << res;
-		return;
+flag:;
+
+	status = listen(Server_sock, SOMAXCONN);
+
+	if (status == SOCKET_ERROR) {
+		std::cout << "ABORT\n";
+		closesocket(Server_sock); //clean up
+		WSACleanup(); //clean up
+		return 0;
 	}
-	cout << "Waiting For Accepting . . . " << endl;
-	sockaddr_in Client_adder;
-	int Client_len = sizeof(Client_adder);
-	res = accept(server_SOCK , (sockaddr*) &Client_adder , &Client_len);
-	if (res != 0)
-	{
-		// cerr = cout 
-		cerr << "accept Error : " << res;
-		closesocket(server_SOCK);
-		goto falg;
+	std::cout << "Waiting for listening . . ." << std::endl;
+
+	//WAIT FOR CONNECTION
+	sockaddr_in client_address; //NEW
+	int client_address_size = sizeof(client_address);  //NEW
+
+	SOCKET neclinet;
+	neclinet = accept(Server_sock, (sockaddr*)&client_address, &client_address_size);
+
+	if (neclinet == INVALID_SOCKET) {
+		std::cout << "ABORT\n";
+		closesocket(neclinet); //clean up
+		WSACleanup(); //clean up
+		goto flag;
 	}
-	char Clinet_IP[256];
-	inet_ntop(AF_INET, &Client_adder.sin_addr, Clinet_IP, 256);
-	// Save Info
-	Client newclinet;
-	newclinet.info = Client_adder;
-	newclinet.IP = Clinet_IP;
-	Clients.push_back(newclinet);
-	cout << "Connect ..." << endl;
-	char BUFFER[BUFLEN]{0};
-	cout << "Waiting for recv";
+
+	std::cout << "Connected . . ." << std::endl;
+
+	//RECEIVE MESSAGE
+	std::cout << "Waiting for recv . . ." << std::endl;
+	char client_ip[256];  //NEW
+
+	inet_ntop(AF_INET, &client_address.sin_addr, client_ip, 256);  //NEW
+
 	while (true)
 	{
-		res = recv(server_SOCK, BUFFER, BUFLEN, 0);
-		if (res != 0)
-		{
-			// cerr = cout 
-			cerr << "recv Error : " << res;
-			closesocket(server_SOCK);
-			WSACleanup();
+		char buffer[1024]{ 0 };
+		status = recv(neclinet, buffer, sizeof(buffer), 0);
+		if (status < 0) {
+			std::cout << "abort\n";
+			closesocket(neclinet); //clean up
+			WSACleanup(); //clean up
+			return 0;
 		}
-		cout << Clinet_IP << BUFFER << endl;
+		std::cerr << client_ip << ": " << buffer << std::endl;
 	}
 
-	return 0;
+	WSAGetLastError();
+
+	system("pause");
+	closesocket(Server_sock);
+	WSACleanup();
+
 }
