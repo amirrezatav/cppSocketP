@@ -1,68 +1,71 @@
-/*
-	Create a TCP Client with socket 
-*/
-
-#include<stdio.h>
 #include<WS2tcpip.h>
-#include <string>
 #include <iostream>
 
 #pragma comment(lib,"ws2_32.lib") //Winsock Library
 using namespace std;
+
+#define ServerPORT 6969
+#define ServerIP "127.0.0.1"
+#define BUFFERLEN 1 * 1024
+
 int main(int argc, char* argv[])
 {
-	WSADATA wsa;
-	SOCKET s;
-	struct sockaddr_in server;
-	char* message;
+	WSADATA Win_Socket_Info;
+	SOCKET MyConnection;
+	struct sockaddr_in Server_Info;
 
 	printf("\nInitialising Winsock...");
-	if (WSAStartup(MAKEWORD(2, 2), &wsa) != 0)
+	if (WSAStartup(MAKEWORD(2, 2), &Win_Socket_Info) != 0)
 	{
 		cerr << "Failed. Error Code : " << WSAGetLastError();
 		return 1;
 	}
 
-	cout << "Initialised.\n";
+	cout << "\nInitialised...";
 
 	//Create a socket
-	if ((s = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
+	if ((MyConnection = socket(AF_INET, SOCK_STREAM, 0)) == INVALID_SOCKET)
 	{
-		cout << "Could not create socket :" << WSAGetLastError();
+		cout << "\nCould not create socket :" << WSAGetLastError();
 	}
 
-	cout << "Socket created.\n";
+	cout << "\nSocket created...";
 
 
-	server.sin_family = AF_INET;
-	server.sin_port = htons(6969);
-	if (inet_pton(AF_INET, "127.0.0.1", &server.sin_addr) <= 0)
+	Server_Info.sin_family = AF_INET;
+	Server_Info.sin_port = htons(ServerPORT);
+	if (inet_pton(AF_INET, ServerIP, &Server_Info.sin_addr) <= 0)
 	{
 		cerr << "Failed. Error Code : " << WSAGetLastError();
 		return 1;
 	}
 
 	//Connect to remote server
-	if (connect(s, (struct sockaddr*)&server, sizeof(server)) < 0)
+	while (true)
 	{
-		cerr << "connect error";
-		return 1;
+		if (connect(MyConnection, (struct sockaddr*)&Server_Info, sizeof(Server_Info)) < 0)
+			cerr << "\nconnection error ... !";
+		else
+			break;
+		Sleep(2 * 1000);
 	}
+	
 
-	cout << "Connected";
+	cout << "\nConnected\n";
 
 	//Send some data
 	
 	while (true)
 	{
-		char a[512];
-		std::cin >> a;
-		if (send(s, a, strlen(a) , 0) < 0)
+		char Buffer[BUFFERLEN];
+		cout << "\n-> Write your Message : ";
+		std::cin >> Buffer;
+		if (send(MyConnection, Buffer, strlen(Buffer) , 0) < 0)
 		{
-			puts("Send failed");
+			puts("\nSend failed");
 			return 1;
 		}
-		puts("Data Send\n");
+		puts(">>>>> Data Send\n");
 	}
 
 	return 0;
