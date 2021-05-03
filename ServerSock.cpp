@@ -1,7 +1,8 @@
 #include<iostream>
 #include<WS2tcpip.h>
 #pragma comment (lib, "Ws2_32.lib")
-
+#define BUFFERLEN 1 * 1024
+#define PORT 6969
 
 int main()
 {
@@ -20,7 +21,7 @@ int main()
 	//CREATE LISTENING SOCKET
 	sockaddr_in server_address;
 	server_address.sin_family = AF_INET;
-	server_address.sin_port = htons(6969);
+	server_address.sin_port = htons(PORT);
 	server_address.sin_addr.S_un.S_addr = INADDR_ANY;
 
 	SOCKET Server_sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -69,7 +70,7 @@ flag:;
 
 	while (true)
 	{
-		char buffer[1024]{ 0 };
+		char buffer[BUFFERLEN]{ 0 };
 		status = recv(neclinet, buffer, sizeof(buffer), 0);
 		if (status < 0) {
 			std::cout << "abort\n";
