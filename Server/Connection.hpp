@@ -1,3 +1,9 @@
+//-----------------------------------------------------
+// Design Name : Server Side Socket
+// File Name   : Connection.hpp
+// Function    : Initial Server 
+// Coder       : Amirreza Tavakoli
+//-----------------------------------------------------
 #ifndef Connection_H
 #define Connection_H
 
