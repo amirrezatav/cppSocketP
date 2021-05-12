@@ -121,11 +121,7 @@ public:void BeginRecive(SOCKET Client)
 			break;
 		default:
 			break;
-		}
-
-		
+		}	
 	}
 };
-
-
 #endif // !Client_H
