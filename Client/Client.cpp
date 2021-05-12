@@ -7,6 +7,7 @@
 //-----------------------------------------------------
 
 #define _CRT_SECURE_NO_WARNINGS
+
 #include<iostream>
 #include<WS2tcpip.h>
 #include <cstdio>
@@ -156,30 +157,7 @@ bool Send(const char * buffer , long buffersize)
 	}
 	return 0;
 }
-//struct Header
-//{
-//	long size;
-//	string Extention;
-//	string Filename;
-//	Type type;
-//	Json Encode()
-//	{
-//		Json json;
-//		json["size"] = size;
-//		json["Extention"] = Extention;
-//		json["Filename"] = Filename;
-//		json["type"] = type;
-//		return  json;
-//	}
-//	void Decode(string input)
-//	{
-//		auto json = Json::parse(input);;
-//		size = json["size"].get<int>();
-//		Extention = json["Extention"].get<string>();
-//		Filename = json["Filename"].get<string>();
-//		type = json["type"].get<Type>();
-//	}
-//};
+
 
 void SendFile(const string& source)
 {
@@ -264,6 +242,7 @@ int main()
 	{
 		Connection(MySocket, My_address);
 		string path;
+		cout << "File Path :";
 		getline(cin, path);
 		SendFile(path);
 	}
