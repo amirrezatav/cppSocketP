@@ -1,3 +1,9 @@
+//-----------------------------------------------------
+// Design Name : Server Side Socket
+// File Name   : Client.hpp
+// Function    : Handel Clients
+// Coder       : Amirreza Tavakoli
+//-----------------------------------------------------
 #ifndef ClientS_H
 #define ClientS_H
 #include <WinSock2.h>
