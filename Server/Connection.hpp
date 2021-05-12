@@ -93,9 +93,4 @@ private:
 		return 1;
 	}
 };
-
-
-
-
-
 #endif // !Connection_H
