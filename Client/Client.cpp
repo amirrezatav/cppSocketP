@@ -17,7 +17,7 @@
 #include<sstream>
 #include<string>
 #include <cstdio>
-#include "nlohmann/json.hpp"
+#include "json.hpp"
 #include <bitset>
 #include "ProgressBar1.hpp"
 #pragma comment (lib, "Ws2_32.lib")
