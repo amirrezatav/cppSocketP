@@ -66,20 +66,20 @@ int main()
 		WSACleanup(); //clean up
 	}
 
-	char clientip[NI_MAXHOST];
-	char cliantport[NI_MAXSERV];
+	char Host[NI_MAXHOST];
+	char Service[NI_MAXSERV];
 
-	ZeroMemory(clientip , NI_MAXHOST); // memset(clientip , 0 , NI_MAXHOST);
-	ZeroMemory(cliantport, NI_MAXSERV);
+	ZeroMemory(Host , NI_MAXHOST); // memset(clientip , 0 , NI_MAXHOST);
+	ZeroMemory(Service, NI_MAXSERV);
 	
-	if (getnameinfo((sockaddr*)&client_address, sizeof(client_address), clientip, NI_MAXHOST, cliantport, NI_MAXSERV , 0) == 0 )
+	if (getnameinfo((sockaddr*)&client_address, sizeof(client_address), Host, NI_MAXHOST, Service, NI_MAXSERV , 0) == 0 )
 	{
-		cout << clientip << "Connected on port " << cliantport;
+		cout << Host << "Connected on port " << Service;
 	}
 	else
 	{
-		inet_ntop(AF_INET, &client_address.sin_addr, clientip, NI_MAXHOST);
-		cout << clientip << "Connected on port " << ntohs(client_address.sin_port);
+		inet_ntop(AF_INET, &client_address.sin_addr, Host, NI_MAXHOST);
+		cout << Host << "Connected on port " << ntohs(client_address.sin_port);
 	}
 	char buffer[BUFFERLEN];
 	//RECEIVE MESSAGE
@@ -100,10 +100,10 @@ int main()
 			WSACleanup(); //clean up
 			return 0;
 		}
-		std::cerr << clientip << ": " << buffer << std::endl;
+		std::cerr << Host << ": " << buffer << std::endl;
 		string message;
 		cin >> message;
-		send(NewClient, message.c_str(), message.length() + 1, 0);
+		send(NewClient, message.c_str(), message.length(), 0);
 	}
 
 	WSAGetLastError();
