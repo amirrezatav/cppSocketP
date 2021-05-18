@@ -103,7 +103,7 @@ int main()
 		std::cerr << Host << ": " << buffer << std::endl;
 		string message;
 		cin >> message;
-		send(NewClient, message.c_str(), message.length(), 0);
+		send(NewClient, message.c_str(), message.length() + 1, 0);
 	}
 
 	WSAGetLastError();
