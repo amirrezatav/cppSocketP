@@ -4,7 +4,6 @@
 #include <thread>
 #include <future>
 #include<WS2tcpip.h>
-
 #pragma comment (lib, "Ws2_32.lib")
 #define BUFFERLEN 1 * 1024
 #define PORT 6969
