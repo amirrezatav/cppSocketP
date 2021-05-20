@@ -358,7 +358,7 @@ htonl, htons, ntohl, ntohs - convert values between host and network byte order
       #pragma comment (lib, "Ws2_32.lib")
 
 
-
+```cpp
       int main()
       {
 
@@ -400,7 +400,7 @@ htonl, htons, ntohl, ntohs - convert values between host and network byte order
       	std::cout << "Waiting for listening . . ." << std::endl;
       }
 
-
+```
 ## Socket creation:
    1. socketcr: socket descriptor, an integer (like a file-handle)
    
