@@ -152,7 +152,7 @@ o	Close: Release the connection
  
 # Socket Creation 
 ## Stages for Server: 
-
+```cpp
     #include<iostream>
     #include<WS2tcpip.h>
     #include<thread>
@@ -174,6 +174,7 @@ o	Close: Release the connection
 	    	return 0;
     	}
      }
+```
 ## WSAStartup
     int WSAStartup (
       WORD wVersionRequested,  
@@ -241,7 +242,7 @@ For example, say that the 32-bit pattern 0x12345678 is stored at address 0x00400
 
 Within a byte the order of the bits is the same for all computers (no matter how the bytes themselves are arranged).
 
-
+```cpp
       int main()
       {
 
@@ -263,18 +264,18 @@ Within a byte the order of the bits is the same for all computers (no matter how
       	server_address.sin_addr.S_un.S_addr = INADDR_ANY;
       }
       
-      
+```
 ## SOCKADDR_IN
 The SOCKADDR_IN structure specifies a transport address and port for the AF_INET address family.
 **Syntax**
-
+```cpp
      struct sockaddr_in {
          short            sin_family;   /* Protocol family (always AF_INET) */
          unsigned short   sin_port;     /* Port number in network byte order */
          struct in_addr   sin_addr;     /* IP address in network byte order */
          unsigned char    sin_zero[8];  /* Pad to sizeof(struct sockaddr) */
      };
-
+```
 There are multiple protocol families. Each family has its own address structure.
 
 Example: AF_INET uses sockaddr_in, AF_INET6 uses sockaddr_in6, AF_UNIX uses sockaddr_un, etc. But sockaddr is the base structure. All these structures must be type-cast to sockaddr while binding/connecting a socket.
@@ -291,13 +292,13 @@ The first element in both structures is the same and occupies the same memory.
      sin_zero[8] --> 8 bytes
  Total = 14 bytes (equal to size of sa_data[14])
      
-     
+```cpp
      sockaddr_in listen_address;
      listen_address.sin_family = AF_INET;
      listen_address.sin_port = htons(666);
      listen_address.sin_addr.S_un.S_addr = INADDR_ANY;
      //ServerInfo.sin_addr.S_un.S_addr = inet_addr("192.168.1.50");
-
+```
 
 For a server, you typically want to bind to all interfaces - not just "localhost".
 If you wish to bind your socket to localhost only, the syntax would be my_sockaddress.sin_addr.s_addr = inet_addr("127.0.0.1");
@@ -335,13 +336,13 @@ The htonsfunction does not require that the Winsock DLL has previously been load
 htonl, htons, ntohl, ntohs - convert values between host and network byte order
 
 **Synopsis**
-
+```cpp
      #include <arpa/inet.h>
      uint32_t htonl(uint32_t hostlong);
      uint16_t htons(uint16_t hostshort);
      uint32_t ntohl(uint32_t netlong);
      uint16_t ntohs(uint16_t netshort);
-     
+```
 **Description**
 
 * The htonl() function converts the unsigned integer hostlong from host byte order to network byte order.
@@ -399,7 +400,6 @@ htonl, htons, ntohl, ntohs - convert values between host and network byte order
 	      }
       	std::cout << "Waiting for listening . . ." << std::endl;
       }
-
 ```
 ## Socket creation:
    1. socketcr: socket descriptor, an integer (like a file-handle)
