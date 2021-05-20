@@ -439,20 +439,20 @@ On success, zero is returned.  On error, -1 is returned, anderrno is set to indi
 
      
 # Multi Client Server :
-### fd_set : 
+### **fd_set** : 
 This structure is used by various Windows Sockets functions and service providers, such as the select function, to place sockets into a set for various purposes. For example, the readfds parameter of the select function can be used for testing a socket for readability.
 `typedef struct fd_set {u_int fd_count;SOCKET fd_array[FD_SETSIZE];} fd_set;`
 
 + Members
-  + fd_count : Number of sockets in the set.
-  + fd_array : Array of sockets that are in the set.
+  + **fd_count** : Number of sockets in the set.
+  + **fd_array** : Array of sockets that are in the set.
 ### Select :
 This function determines the status of one or more sockets, waiting if necessary, to perform synchronous I/O.
 	`int select(int nfds,fd_set FAR* readfds,fd_set FAR* writefds,fd_set FAR* exceptfds,const struct timeval FAR* timeout);`
-+ nfds :[in] Ignored. The nfds parameter is included only for compatibility with Berkeley sockets.
-+ readfds : [in, out] Optional pointer to a set of sockets to be checked for readability.
-+ writefds : [in, out] Optional pointer to a set of sockets to be checked for writability.
-+ exceptfds : [in, out] Optional pointer to a set of sockets to be checked for errors.
-+ timeout : [in] Maximum time for select to wait, provided in the form of a timeval structure. Set the timeout parameter to NULL for blocking operation
-+ return : This function returns the total number of socket handles that are ready and contained in the fd_set structures, zero if the time limit expired, or the SOCKET_ERROR if an error occurred. If the return value is SOCKET_ERROR, WSAGetLastError can be used to retrieve a specific error code.
++ **nfds** :[in] Ignored. The nfds parameter is included only for compatibility with Berkeley sockets.
++ **readfds** : [in, out] Optional pointer to a set of sockets to be checked for readability.
++ **writefds** : [in, out] Optional pointer to a set of sockets to be checked for writability.
++ **exceptfds** : [in, out] Optional pointer to a set of sockets to be checked for errors.
++ **timeout** : [in] Maximum time for select to wait, provided in the form of a timeval structure. Set the timeout parameter to NULL for blocking operation
++ **return** : This function returns the total number of socket handles that are ready and contained in the fd_set structures, zero if the time limit expired, or the SOCKET_ERROR if an error occurred. If the return value is SOCKET_ERROR, WSAGetLastError can be used to retrieve a specific error code.
 More information in : https://docs.microsoft.com/en-us/previous-versions/windows/embedded/aa450882(v=msdn.10) 
